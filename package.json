@@ -1,0 +1,11 @@
+{
+  "name": "wp-theme-gulp",
+  "version": "1.0.0",
+  "description": "A Gulp Installation that can drive development for WordPress themes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cedon/wp-theme-gulp"
+  },
+  "author": "Jon Liebold",
+  "license": "GPL-2.0"
+}
