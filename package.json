@@ -10,7 +10,7 @@
   "license": "GPL-2.0",
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "browsersync": "0.0.1-security",
+    "browser-sync": "^2.18.12",
     "gulp": "^3.9.1",
     "gulp-image": "^2.9.0",
     "gulp-jshint": "^2.0.4",
