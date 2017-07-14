@@ -26,4 +26,27 @@ if (i > -1) {
     process.exit(1);
 }
 
+// Define theme paths
+var root      = '../' + themename + '/',
+    scss      = root + 'sass/',
+    js        = root + 'js/',
+    img       = root + 'images/',
+    languages = root + 'languages/';
+
+// Compile CSS from SASS w/ Autoprefixing
+gulp.task('css', function() {
+    return gulp.src(scss + '{style.scss,rtl.scss}')
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            outputStyle: 'expanded',
+            indentType: 'tab',
+            indentWidth: 1
+        }).on('error', sass.logError))
+        .pipe(postcss([
+            autoprefixer('last 2 versions', '> 1%')
+        ]))
+        .pipe(sourcemaps.write(scss + 'maps'))
+        .pipe(gulp.dest(root));
+}); // End CSS
+
 gulp.task('default', []);
