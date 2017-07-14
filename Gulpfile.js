@@ -31,7 +31,8 @@ var root      = '../' + themename + '/',
     scss      = root + 'sass/',
     js        = root + 'js/',
     img       = root + 'images/',
-    languages = root + 'languages/';
+    languages = root + 'languages/',
+    logs      = root + 'logs/';
 
 // Compile CSS from SASS w/ Autoprefixing
 gulp.task('css', function() {
@@ -50,11 +51,22 @@ gulp.task('css', function() {
 }); // End CSS
 
 // Lint JavaScript Files
-gulp.task('javascript' function() {
+gulp.task('javascript', function() {
     return gulp.src([js + '*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(gulp.dest(js))
 }); // End JavaScript
+
+// Check PHP Files Against WordPress Coding Standards
+gulp.task('php', function() {
+    return gulp.src([root + '**/*.php'])
+    .pipe(phpcs({
+        bin: 'phpcs',
+        standard: 'WordPress',
+        warningSeverity: 0
+    }))
+        .pipe(phpcs.reporter('file', {path: logs + 'phpcs.log'}))
+});
 
 gulp.task('default', []);
