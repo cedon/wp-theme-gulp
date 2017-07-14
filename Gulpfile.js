@@ -66,7 +66,15 @@ gulp.task('php', function() {
         standard: 'WordPress',
         warningSeverity: 0
     }))
-        .pipe(phpcs.reporter('file', {path: logs + 'phpcs.log'}))
+    .pipe(phpcs.reporter('file', {path: logs + 'phpcs.log'}))
+});
+
+// Optimize Images
+gulp.task('images', function() {
+    return gulp.src(img + 'RAW/**/*.{jpg,JPG,png}')
+    .pipe(newer(img))
+    .pipe(image())
+    .pipe(gulp.dest(img))
 });
 
 gulp.task('default', []);
