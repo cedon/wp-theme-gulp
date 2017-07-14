@@ -20,6 +20,8 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-util": "^3.0.8",
-    "jshint": "^2.9.5"
+    "jshint": "^2.9.5",
+    "normalize-scss": "^7.0.0",
+    "susy": "^3.0.0"
   }
 }
