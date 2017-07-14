@@ -77,4 +77,17 @@ gulp.task('images', function() {
     .pipe(gulp.dest(img))
 });
 
-gulp.task('default', []);
+// Watch Task
+gulp.task('watch', function() {
+   browserSync.init({
+       open: 'external',
+       proxy: 'wp.jldc.dev',
+       port: 8080
+   });
+   gulp.watch([root + '**/*.css', root + '**/*.scss'], ['css']);
+   gulp.watch(root + '**/*.js', ['javascript']);
+   gulp.watch(img + 'RAW/**/*.{jpg,JPG,png}', ['images']);
+   gulp.watch(root + '**/*').on('change', browserSync.reload);
+});
+
+gulp.task('default', ['watch']);
