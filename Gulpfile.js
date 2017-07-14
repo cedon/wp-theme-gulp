@@ -36,17 +36,25 @@ var root      = '../' + themename + '/',
 // Compile CSS from SASS w/ Autoprefixing
 gulp.task('css', function() {
     return gulp.src(scss + '{style.scss,rtl.scss}')
-        .pipe(sourcemaps.init())
-        .pipe(sass({
-            outputStyle: 'expanded',
-            indentType: 'tab',
-            indentWidth: 1
-        }).on('error', sass.logError))
-        .pipe(postcss([
-            autoprefixer('last 2 versions', '> 1%')
-        ]))
-        .pipe(sourcemaps.write(scss + 'maps'))
-        .pipe(gulp.dest(root));
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+        outputStyle: 'expanded',
+        indentType: 'tab',
+        indentWidth: 1
+    }).on('error', sass.logError))
+    .pipe(postcss([
+        autoprefixer('last 2 versions', '> 1%')
+    ]))
+    .pipe(sourcemaps.write(scss + 'maps'))
+    .pipe(gulp.dest(root));
 }); // End CSS
+
+// Lint JavaScript Files
+gulp.task('javascript' function() {
+    return gulp.src([js + '*.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(gulp.dest(js))
+}); // End JavaScript
 
 gulp.task('default', []);
