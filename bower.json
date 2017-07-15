@@ -1,0 +1,24 @@
+{
+  "name": "wp-theme-gulp",
+  "description": "A Gulp Installation that can drive development for WordPress themes",
+  "main": "",
+  "authors": [
+    "Jon Liebold"
+  ],
+  "license": "GPL-2.0",
+  "homepage": "https://github.com/cedon/wp-theme-gulp",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "^7.0.0",
+    "susy": "^3.0.0",
+    "normalize-scss": "^3.0.3",
+    "zen-grids": "^2.0.2"
+  }
+}

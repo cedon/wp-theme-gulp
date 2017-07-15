@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
+    path  = require('path'),
 
     // Prepare & Optimize Code
     autoprefixer = require('autoprefixer'),
@@ -13,6 +14,12 @@ var gulp = require('gulp'),
 
     // Only Work with New or Updated Files
     newer        = require('gulp-newer');
+
+    // Add SASS Libraries for includePath
+const SASS_INCLUDE_PATHS = [
+    path.join(__dirname, '../0 Gulp/bower_components/normalize-scss'),
+    path.join(__dirname, '../0 Gulp/bower_components/susy/sass')
+];
 
 // Define variable from --theme parameter
 var themename, i = process.argv.indexOf("--theme");
@@ -39,6 +46,7 @@ gulp.task('css', function() {
     return gulp.src(scss + '{style.scss,rtl.scss}')
     .pipe(sourcemaps.init())
     .pipe(sass({
+        includePaths: SASS_INCLUDE_PATHS,
         outputStyle: 'expanded',
         indentType: 'tab',
         indentWidth: 1
