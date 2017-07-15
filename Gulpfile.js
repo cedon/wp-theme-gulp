@@ -18,7 +18,12 @@ var gulp = require('gulp'),
     // Add SASS Libraries for includePath
 const SASS_INCLUDE_PATHS = [
     path.join(__dirname, '../0 Gulp/bower_components/normalize-scss'),
-    path.join(__dirname, '../0 Gulp/bower_components/susy/sass')
+    path.join(__dirname, '../0 Gulp/bower_components/susy/sass'),
+    path.join(__dirname, '../0 Gulp/bower_components/bourbon/app/assets'),
+    path.join(__dirname, '../0 Gulp/bower_components/neat/core'),
+    path.join(__dirname, '../0 Gulp/bower_components/sassline/assets/sass'),
+    path.join(__dirname, '../0 Gulp/bower_components/sassymaps/sass'),
+    path.join(__dirname, '../0 Gulp/bower_components/zen-grids/sass')
 ];
 
 // Define variable from --theme parameter

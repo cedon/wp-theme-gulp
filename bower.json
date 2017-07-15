@@ -19,6 +19,10 @@
     "normalize-css": "^7.0.0",
     "susy": "^3.0.0",
     "normalize-scss": "^3.0.3",
-    "zen-grids": "^2.0.2"
+    "zen-grids": "^2.0.2",
+    "breakpoint-sass": "^2.7.1",
+    "sassline": "^2.1.2",
+    "neat": "^2.1.0",
+    "bourbon": "^4.3.4"
   }
 }
