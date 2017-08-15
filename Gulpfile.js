@@ -20,6 +20,7 @@ const SASS_INCLUDE_PATHS = [
     path.join(__dirname, 'bower_components/normalize-scss'),
     path.join(__dirname, 'bower_components/susy/sass'),
     path.join(__dirname, 'bower_components/bourbon/app/assets'),
+    path.join(__dirname, 'bower_components/breakpoint-sass/stylesheets'),
     path.join(__dirname, 'bower_components/neat/core'),
     path.join(__dirname, 'bower_components/sassline/assets/sass'),
     path.join(__dirname, 'bower_components/sassymaps/sass'),
