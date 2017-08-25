@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     // Prepare & Optimize Code
     autoprefixer = require('autoprefixer'),
     browserSync  = require('browser-sync').create(),
-    image        = require('gulp-image'),
+    image        = require('gulp-imagemin'),
     jshint       = require('gulp-jshint'),
     phpcs        = require('gulp-phpcs'),
     postcss      = require('gulp-postcss'),
@@ -86,7 +86,7 @@ gulp.task('php', function() {
 
 // Optimize Images
 gulp.task('images', function() {
-    return gulp.src(img + 'RAW/**/*.{jpg,JPG,png}')
+    return gulp.src(img + 'RAW/**/*.{jpg,JPG,png,gif,GIF,svg,SVG}')
     .pipe(newer(img))
     .pipe(image())
     .pipe(gulp.dest(img))
