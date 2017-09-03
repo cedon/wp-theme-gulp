@@ -120,7 +120,7 @@ gulp.task('images', function() {
 // Watch Task
 gulp.task('watch', function() {
    browserSync.init({
-       browser: 'chrome',
+       browser: ['chrome', 'C:\\\\Program Files\\\\Firefox Developer Edition\\\\firefox.exe'],
        open: 'external',
        proxy: wwwproxy,
        port: 8080,
