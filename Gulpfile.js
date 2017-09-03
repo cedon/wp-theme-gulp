@@ -31,14 +31,25 @@ const SASS_INCLUDE_PATHS = [
 // Define variable from --theme parameter
 var themename, i = process.argv.indexOf("--theme");
 
+// Define test server install location from --env parameter
+var wpenv, ii = process.argv.indexOf("--env");
+
 // Test to see if --theme parameter has been used and stop execution if not
 if (i > -1) {
     themename = process.argv[i + 1];
-    gutil.log('You are currently working with the', gutil.colors.green(themename), 'theme');
 } else {
     gutil.log(gutil.colors.bgRed('!!FATAL ERROR!!'), 'No Theme Specified. Exiting Gulp.');
     process.exit(1);
 }
+
+if ( ii > -1 ) {
+    wpenv = process.argv[ii + 1];
+} else {
+    wpenv = 'wpdev';
+}
+
+gutil.log('You are currently working with the', gutil.colors.green(themename), 'theme using the', gutil.colors.cyan(wpenv), 'environment');
+
 
 // Define theme paths
 var root      = '../' + themename + '/',
@@ -47,6 +58,20 @@ var root      = '../' + themename + '/',
     img       = root + 'images/',
     languages = root + 'languages/',
     logs      = root + 'logs/';
+
+// Define WordPress Environment Path
+var wwwroot   = '../../../zSite/' + wpenv + '/',
+    wpthemes  = wwwroot + 'wp-content/themes/',
+    themeroot = wpthemes + themename + '/',
+    wwwproxy  = wpenv + '.dev';
+
+gutil.log(gutil.colors.magenta.bold(themeroot));
+
+// Copy Files to WordPress Installation
+gulp.task('copy', function () {
+   return gulp.src([root + '**/*.php', root + 'style.css', root + 'js/**/*.js', root + 'languages/*', root + 'images/*', '!' + root + 'images/RAW{,/**}'], {base: '.'})
+       .pipe(gulp.dest(themeroot))
+});
 
 // Compile CSS from SASS w/ Autoprefixing
 gulp.task('css', function() {
@@ -95,14 +120,17 @@ gulp.task('images', function() {
 // Watch Task
 gulp.task('watch', function() {
    browserSync.init({
+       browser: 'chrome',
        open: 'external',
-       proxy: 'wp.jldc.dev',
-       port: 8080
+       proxy: wwwproxy,
+       port: 8080,
+       reloadDelay: 2000
    });
-   gulp.watch([root + '**/*.css', root + '**/*.scss'], ['css']);
-   gulp.watch(root + '**/*.js', ['javascript']);
-   gulp.watch(img + 'RAW/**/*.{jpg,JPG,png}', ['images']);
+   gulp.watch([root + '**/*.css', root + '**/*.scss'], ['css', 'copy']);
+   gulp.watch(root + '**/*.js', ['javascript', 'copy']);
+   gulp.watch(root + '**/*.php', ['copy']);
+   gulp.watch(img + 'RAW/**/*.{jpg,JPG,png,gif,GIF,svg,SVG}', ['images', 'copy']);
    gulp.watch(root + '**/*').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['copy', 'watch']);
