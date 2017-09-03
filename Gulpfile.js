@@ -65,7 +65,6 @@ var wwwroot   = '../../../zSite/' + wpenv + '/',
     themeroot = wpthemes + themename + '/',
     wwwproxy  = wpenv + '.dev';
 
-gutil.log(gutil.colors.magenta.bold(themeroot));
 
 // Copy Files to WordPress Installation
 gulp.task('copy', function () {
