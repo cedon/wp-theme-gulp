@@ -60,7 +60,7 @@ var root      = '../' + themename + '/',
     scss      = root + 'sass/',
     js        = root + 'js/',
     jssrc     = js + 'src/',
-    img       = root + 'images/',
+    img       = root + 'img/',
     languages = root + 'languages/',
     logs      = root + 'logs/';
 
