@@ -1,6 +1,9 @@
-var gulp = require('gulp'),
-    gutil = require('gulp-util'),
-    path  = require('path'),
+var gulp    = require('gulp'),
+    gconcat = require('gulp-concat'),
+    guglify = require('gulp-uglify'),
+    gutil   = require('gulp-util'),
+    path    = require('path'),
+    pump    = require('pump'),
 
     // Prepare & Optimize Code
     autoprefixer = require('autoprefixer'),
@@ -45,6 +48,7 @@ if (i > -1) {
 if ( ii > -1 ) {
     wpenv = process.argv[ii + 1];
 } else {
+    gutil.log(gutil.colors.bgYellow('!!WARNING!!'), 'No Environment Specified. Using Default of \'wpdev\'');
     wpenv = 'wpdev';
 }
 
@@ -55,6 +59,7 @@ gutil.log('You are currently working with the', gutil.colors.green(themename), '
 var root      = '../' + themename + '/',
     scss      = root + 'sass/',
     js        = root + 'js/',
+    jssrc     = js + 'src/',
     img       = root + 'images/',
     languages = root + 'languages/',
     logs      = root + 'logs/';
@@ -91,11 +96,23 @@ gulp.task('css', function() {
 
 // Lint JavaScript Files
 gulp.task('javascript', function() {
-    return gulp.src([js + '*.js'])
+    return gulp.src([jssrc + '*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(gulp.dest(js))
 }); // End JavaScript
+
+// Minify JavaScript Files
+gulp.task('jsmin', function(cb) {
+    pump([
+        gulp.src(jssrc + '*.js'),
+        gconcat('script.js'),
+        guglify(jssrc + 'script.js'),
+        gulp.dest(js + '/dist')
+    ],
+        cb
+    );
+}); // End JavaScript Minify
 
 // Check PHP Files Against WordPress Coding Standards
 gulp.task('php', function() {
