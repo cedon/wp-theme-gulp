@@ -68,8 +68,7 @@ var root      = '../' + themename + '/',
 var wwwroot   = '../../../zSite/' + wpenv + '/',
     wpthemes  = wwwroot + 'wp-content/themes/',
     themeroot = wpthemes + themename + '/',
-    wwwproxy  = wpenv + '.dev';
-
+    wwwproxy  = wpenv + '.localhost';
 
 // Copy Files to WordPress Installation
 gulp.task('copy', function () {
@@ -138,7 +137,8 @@ gulp.task('watch', function() {
    browserSync.init({
        browser: ['chrome', 'C:\\\\Program Files\\\\Firefox Developer Edition\\\\firefox.exe'],
        open: 'external',
-       proxy: wwwproxy,
+       //proxy: wwwproxy,
+       proxy: 'wpdev.localhost',
        port: 8080,
        reloadDelay: 2000
    });
