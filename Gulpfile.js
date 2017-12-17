@@ -128,7 +128,9 @@ gulp.task('php', function() {
 gulp.task('images', function() {
     return gulp.src(img + 'RAW/**/*.{jpg,JPG,png,gif,GIF,svg,SVG}')
     .pipe(newer(img))
-    .pipe(image())
+    .pipe(image({
+        verbose: true
+    }))
     .pipe(gulp.dest(img))
 });
 
@@ -137,8 +139,7 @@ gulp.task('watch', function() {
    browserSync.init({
        browser: ['chrome', 'C:\\\\Program Files\\\\Firefox Developer Edition\\\\firefox.exe'],
        open: 'external',
-       //proxy: wwwproxy,
-       proxy: 'wpdev.localhost',
+       proxy: wwwproxy,
        port: 8080,
        reloadDelay: 2000
    });
