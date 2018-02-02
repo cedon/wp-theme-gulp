@@ -26,7 +26,7 @@
     "jshint": "^2.9.5",
     "node-normalize-scss": "^3.0.0",
     "path": "^0.12.7",
-    "pump": "^2.0.1",
+    "pump": "^3.0.0",
     "susy": "^3.0.3",
     "zen-grids": "^2.0.3"
   }
