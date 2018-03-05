@@ -9,7 +9,7 @@
   "author": "Jon Liebold",
   "license": "GPL-2.0",
   "devDependencies": {
-    "autoprefixer": "^8.0.0",
+    "autoprefixer": "^8.1.0",
     "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.23.6",
     "gulp": "^3.9.1",
