@@ -27,7 +27,7 @@
     "node-normalize-scss": "^3.0.0",
     "path": "^0.12.7",
     "pump": "^3.0.0",
-    "susy": "^3.0.3",
+    "susy": "^3.0.5",
     "zen-grids": "^2.0.3"
   }
 }
