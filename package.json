@@ -24,7 +24,7 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "jshint": "^2.9.5",
-    "node-normalize-scss": "^3.0.0",
+    "node-normalize-scss": "^8.0.0",
     "path": "^0.12.7",
     "pump": "^3.0.0",
     "susy": "^3.0.3",
