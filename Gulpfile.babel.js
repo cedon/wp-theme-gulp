@@ -214,3 +214,13 @@ export function themeCopy() {
     return gulp.src(paths.www.src)
         .pipe(gulp.dest(paths.www.theme))
 }
+
+// Watchers
+export function watch() {
+    gulp.watch(paths.php.src, gulp.series(php, themeCopy, reload));
+    gulp.watch(paths.css.vars, gulp.series(cssStyles, reload));
+    gulp.watch(paths.css.sass, sassStyles);
+    gulp.watch(paths.css.src, gulp.series(cssStyles, reload));
+    gulp.watch(paths.scripts.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
+    gulp.watch(paths.images.src, gulp.series(images, reload))
+}
