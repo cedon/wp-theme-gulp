@@ -112,22 +112,8 @@ export function php() {
         .pipe(gulp.dest(paths.php.dest))
 }
 
-// PHP Code Linting via PHPCS
-export function php() {
-    config = requireUncached(themePath + 'config/theme-config.js');
-    return gulp.src(paths.php.src)
-        .pipe(newer(paths.php.des))
-        .pipe(phpcs({
-            bin: 'phpcs',
-            standard: 'WordPress',
-            warningSeverity: 0
-        }))
-        .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs.log'}))
-        .pipe(gulp.dest(paths.php.dest))
-}
-
 // Process any SCSS Files
-export function sass() {
+export function sassStyles() {
     return gulp.src(paths.css.sass, {base: themePath})
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
@@ -137,9 +123,8 @@ export function sass() {
 }
 
 // Process CSS through PostCSS
-export function css() {
-    let cssVars = requireUncached(paths.css.vars)
-
+export function cssStyles() {
+    let cssVars = requireUncached(paths.css.vars);
     return gulp.src(paths.css.src)
         .pipe(print())
         .pipe(phpcs({
