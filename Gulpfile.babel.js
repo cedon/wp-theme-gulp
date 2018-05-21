@@ -7,6 +7,7 @@ import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
 import cssnano from 'gulp-cssnano';
 import cssnext from 'postcss-cssnext';
+import csssorter from 'css-declaration-sorter';
 import eslint from 'gulp-eslint';
 import log from 'fancy-log';
 import gulpif from 'gulp-if';
@@ -138,6 +139,9 @@ export function cssStyles() {
         }))
         .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs-css.log'}))
         .pipe(postcss([
+            csssorter({
+                order: "smacss"
+            }),
             cssnext({
                 browsers: config.dev.browserlist,
                 features: {
