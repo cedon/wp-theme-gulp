@@ -5,7 +5,6 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
-import colors from 'ansi-colors';
 import cssnano from 'gulp-cssnano';
 import cssnext from 'postcss-cssnext';
 import eslint from 'gulp-eslint';
@@ -168,7 +167,7 @@ export function cssStyles() {
             })
         ]))
         .pipe(gulpif(!config.debug.styles, cssnano()))
-        .pipe(gulp.des(paths.css.dest))
+        .pipe(gulp.dest(paths.css.dest))
 }
 
 // JavaScript processing
