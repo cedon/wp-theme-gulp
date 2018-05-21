@@ -224,3 +224,8 @@ export function watch() {
     gulp.watch(paths.scripts.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
     gulp.watch(paths.images.src, gulp.series(images, reload))
 }
+
+// Initial task sequence
+const initialRun = gulp.series(php, gulp.parallel(scripts, jsLibs), sassStyles, cssStyles, images, serve, watch);
+
+export default initialRun;
