@@ -174,3 +174,11 @@ export function jsLibs() {
         .pipe(newer(paths.js.libsDest))
         .pipe(gulp.des(paths.js.libsDest))
 }
+
+// Image optimization
+export function images() {
+    return gulp.src(paths.images.src)
+        .pipe(newer(paths.images.dest))
+        .pipe(image())
+        .pipe(gulp.dest(paths.images.dest))
+}
