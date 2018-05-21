@@ -68,19 +68,8 @@ const paths = {
     },
     logs: themePath + 'src/logs/',
     www: {
-        root: '../../../zSite/wpdev/',
-        theme: '../../../zSite/wpdev/wp-content/themes/' + config.theme.slug
-        src: [
-                [
-                    themePath + '**/*/*.php',
-                    themePath + 'style.css',
-                    themePath + 'js/**/*.js',
-                    themePath + 'images/*',
-                    themePath + 'languages/*'
-                ],
-                {base: '.'}
-            ]
-
+        themePath: '../../../zSite/wpdev/',
+        theme: '../../../zSite/wpdev/wp-content/themes/' + config.theme.slug + '/'
     }
 };
 
@@ -97,6 +86,7 @@ function serve(done) {
             reloadDelay: 2000
         });
     }
+    done();
 }
 
 function reload(done) {
@@ -116,7 +106,7 @@ function reload(done) {
 export function php() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.php.src)
-        .pipe(newer(paths.php.des))
+        .pipe(newer(paths.php.dest))
         .pipe(phpcs({
             bin: 'phpcs',
             standard: 'WordPress',
@@ -166,7 +156,7 @@ export function cssStyles() {
                 }
             })
         ]))
-        .pipe(gulpif(!config.debug.styles, cssnano()))
+        .pipe(gulpif(!config.dev.debug.styles, cssnano()))
         .pipe(gulp.dest(paths.css.dest))
 }
 
@@ -186,12 +176,12 @@ export function scripts() {
 export function jsLibs() {
     return gulp.src(paths.js.libs)
         .pipe(newer(paths.js.libsDest))
-        .pipe(gulp.des(paths.js.libsDest))
+        .pipe(gulp.dest(paths.js.libsDest))
 }
 
 // Image optimization
 export function images() {
-    return gulp.src(paths.images.src)
+    return gulp.src(paths.images.src, {allowEmpty: true})
         .pipe(newer(paths.images.dest))
         .pipe(image())
         .pipe(gulp.dest(paths.images.dest))
@@ -211,7 +201,19 @@ export function translate() {
 }
 
 export function themeCopy() {
-    return gulp.src(paths.www.src)
+    return gulp.src([
+        themePath + '**/*.php',
+        themePath + 'style.css',
+        themePath + 'js/**/*.js',
+        themePath + 'languages/*',
+        themePath + 'images/*',
+        '!' + themePath + '/src/**/*'
+        ],
+        {
+            allowEmpty: true,
+            base: '.'
+        }
+    )
         .pipe(gulp.dest(paths.www.theme))
 }
 
@@ -221,11 +223,11 @@ export function watch() {
     gulp.watch(paths.css.vars, gulp.series(cssStyles, reload));
     gulp.watch(paths.css.sass, sassStyles);
     gulp.watch(paths.css.src, gulp.series(cssStyles, reload));
-    gulp.watch(paths.scripts.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
+    gulp.watch(paths.js.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
     gulp.watch(paths.images.src, gulp.series(images, reload))
 }
 
 // Initial task sequence
-const initialRun = gulp.series(php, gulp.parallel(scripts, jsLibs), sassStyles, cssStyles, images, serve, watch);
+const initialRun = gulp.series(php, gulp.parallel(scripts, jsLibs), sassStyles, cssStyles, images, themeCopy, serve, watch);
 
 export default initialRun;
