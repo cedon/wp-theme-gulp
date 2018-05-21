@@ -94,3 +94,31 @@ function reload(done) {
     }
     done();
 }
+
+// PHP Code Linting via PHPCS
+export function php() {
+    config = requireUncached(themePath + 'config/theme-config.js');
+    return gulp.src(paths.php.src)
+        .pipe(newer(paths.php.des))
+        .pipe(phpcs({
+            bin: 'phpcs',
+            standard: 'WordPress',
+            warningSeverity: 0
+        }))
+        .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs.log'}))
+        .pipe(gulp.dest(paths.php.dest))
+}
+
+// PHP Code Linting via PHPCS
+export function php() {
+    config = requireUncached(themePath + 'config/theme-config.js');
+    return gulp.src(paths.php.src)
+        .pipe(newer(paths.php.des))
+        .pipe(phpcs({
+            bin: 'phpcs',
+            standard: 'WordPress',
+            warningSeverity: 0
+        }))
+        .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs.log'}))
+        .pipe(gulp.dest(paths.php.dest))
+}
