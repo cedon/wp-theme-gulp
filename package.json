@@ -13,12 +13,12 @@
   "bugs": {
     "url": "https://github.com/cedon/wp-theme-gulp/issues"
   },
+  "dependencies": {},
   "devDependencies": {
     "ajv": "^6.5.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
-    "ansi-colors": "^2.0.1",
     "browser-sync": "^2.24.4",
     "eslint": "^4.19.1",
     "eslint-config-gulp": "^3.0.1",
@@ -64,6 +64,8 @@
       "node": true,
       "es6": true
     },
-    "scripts": {}
+    "scripts": {
+
+    }
   }
 }

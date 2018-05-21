@@ -45,7 +45,7 @@ const paths = {
         src: [themePath + 'src/css/*.css'],
         dest: themePath,
         sass: [themePath + 'src/sass/style.scss'],
-        sassDest: [themePath + 'src/css'],
+        sassDest: [themePath + 'src/css/'],
         vars: themePath + 'config/cssVars.json'
     },
     js: {
@@ -118,7 +118,7 @@ export function php() {
 
 // Process any SCSS Files
 export function sassStyles() {
-    return gulp.src(paths.css.sass, {base: themePath})
+    return gulp.src(paths.css.sass)
         .pipe(sourcemaps.init())
         .pipe(sass().on('error', sass.logError))
         .pipe(tabify(2, true))
@@ -166,7 +166,7 @@ export function scripts() {
     return gulp.src(paths.js.src)
         .pipe(newer(paths.js.dest))
         .pipe(eslint())
-        .pipe(eslint.format())
+        .pipe(eslint.format('codeframe'))
         .pipe(babel())
         .pipe(gulpif(!config.dev.debug, uglify()))
         .pipe(gulp.dest(paths.js.dest))
