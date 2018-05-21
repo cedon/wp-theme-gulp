@@ -67,7 +67,22 @@ const paths = {
         src: [themePath + '**/*.php'],
         dest: themePath + 'languages/' + config.theme.slug + '.pot'
     },
-    logs: themePath + 'src/logs/'
+    logs: themePath + 'src/logs/',
+    www: {
+        root: '../../../zSite/wpdev/',
+        theme: '../../../zSite/wpdev/wp-content/themes/' + config.theme.slug
+        src: [
+                [
+                    themePath + '**/*/*.php',
+                    themePath + 'style.css',
+                    themePath + 'js/**/*.js',
+                    themePath + 'images/*',
+                    themePath + 'languages/*'
+                ],
+                {base: '.'}
+            ]
+
+    }
 };
 
 // Instantiate BrowserSync
@@ -194,4 +209,9 @@ export function translate() {
             lasTranslator: config.theme.author
         }))
         .pipe(gulp.dest(paths.languages.dest))
+}
+
+export function themeCopy() {
+    return gulp.src(paths.www.src)
+        .pipe(gulp.dest(paths.www.theme))
 }
