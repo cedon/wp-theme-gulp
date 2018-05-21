@@ -37,31 +37,60 @@ if (i > 1) {
     process.exit(1);
 }
 
-var basePath = '../' + themeName +'/';
-var config = require(basePath + 'config/theme-config.js');
+var themePath = '../' + themeName +'/';
+var config = require(themePath + 'config/theme-config.js');
 
 const paths = {
     css: {
-        src: [basePath + 'src/css/*.css'],
-        dest: basePath,
-        sass: [basePath + 'src/sass/style.scss']
+        src: [themePath + 'src/css/*.css'],
+        dest: themePath,
+        sass: [themePath + 'src/sass/style.scss']
     },
     js: {
-        src: [basePath + 'src/js/*.js'],
-        dest: basePath + 'js/',
-        libs: [basePath+ '/src/js/libs/**/*.js'],
-        libsDest: [basePath + '/js']
+        src: [themePath + 'src/js/*.js'],
+        dest: themePath + 'js/',
+        libs: [themePath+ '/src/js/libs/**/*.js'],
+        libsDest: [themePath + '/js']
     },
     php: {
-        src: [basePath + '**/*.php'],
-        dest: basePath
+        src: [themePath + '**/*.php'],
+        dest: themePath
     },
     images: {
-        src: [basePath + 'src/img/'],
-        dest: basePath + 'img/'
+        src: [themePath + 'src/img/'],
+        dest: themePath + 'img/'
     },
     languages: {
-        src: [basePath + '**/*.php'],
-        dest: basePath + 'languages/' + config.theme.slug + '.pot'
-    }
+        src: [themePath + '**/*.php'],
+        dest: themePath + 'languages/' + config.theme.slug + '.pot'
+    },
+    logs: themePath + 'src/logs/'
 };
+
+// Instantiate BrowserSync
+const server = browserSync.create();
+
+function serve(done) {
+    if (config.dev.browserSync.live) {
+        server.init({
+            browser: ['chrome', 'C:\\\\Program Files\\\\Firefox Developer Edition\\\\firefox.exe'],
+            open: 'external',
+            proxy: config.dev.browserSync.proxy,
+            port: config.dev.browserSync.port,
+            reloadDelay: 2000
+        });
+    }
+}
+
+function reload(done) {
+    config = requireUncached(themePath + 'config/theme-config.js');
+    if (config.dev.browserSync.live) {
+        if (server.paused) {
+            server.resume();
+        }
+        server.reload();
+    } else {
+        server.pause();
+    }
+    done();
+}
