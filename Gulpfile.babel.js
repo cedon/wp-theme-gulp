@@ -7,6 +7,7 @@ import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
 import colors from 'ansi-colors';
 import cssnano from 'gulp-cssnano';
+import cssnext from 'postcss-cssnext';
 import eslint from 'gulp-eslint';
 import log from 'fancy-log';
 import gulpif from 'gulp-if';
@@ -44,7 +45,9 @@ const paths = {
     css: {
         src: [themePath + 'src/css/*.css'],
         dest: themePath,
-        sass: [themePath + 'src/sass/style.scss']
+        sass: [themePath + 'src/sass/style.scss'],
+        sassDest: [themePath + 'src/css'],
+        vars: themePath + 'config/cssVars.json'
     },
     js: {
         src: [themePath + 'src/js/*.js'],
@@ -121,4 +124,49 @@ export function php() {
         }))
         .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs.log'}))
         .pipe(gulp.dest(paths.php.dest))
+}
+
+// Process any SCSS Files
+export function sass() {
+    return gulp.src(paths.css.sass, {base: themePath})
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        .pipe(tabify(2, true))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest(paths.css.sassDest))
+}
+
+// Process CSS through PostCSS
+export function css() {
+    let cssVars = requireUncached(paths.css.vars)
+
+    return gulp.src(paths.css.src)
+        .pipe(print())
+        .pipe(phpcs({
+            bin: 'phpcs',
+            standard: 'WordPress',
+            warningSeverity: 0
+        }))
+        .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs-css.log'}))
+        .pipe(postcss([
+            cssnext({
+                browsers: config.dev.browserlist,
+                features: {
+                    applyRule: {
+                        sets: cssVars.properties
+                    },
+                    customProperties: {
+                        variables: cssVars.variables,
+                    },
+                    customMedia: {
+                        extensions: cssVars.queries,
+                    },
+                    customSelectors: {
+                        extensions: cssVars.selectors,
+                    }
+                }
+            })
+        ]))
+        .pipe(gulpif(!config.debug.styles, cssnano()))
+        .pipe(gulp.des(paths.css.dest))
 }
