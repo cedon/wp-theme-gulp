@@ -182,3 +182,16 @@ export function images() {
         .pipe(image())
         .pipe(gulp.dest(paths.images.dest))
 }
+
+// Translation Function
+export function translate() {
+    return gulp.src(paths.languages.src)
+        .pipe(sort())
+        .pipe(wppot({
+            domain: config.theme.slug,
+            package: config.theme.slug,
+            bugReport: config.theme.slug,
+            lasTranslator: config.theme.author
+        }))
+        .pipe(gulp.dest(paths.languages.dest))
+}
