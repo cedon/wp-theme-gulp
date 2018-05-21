@@ -155,3 +155,22 @@ export function cssStyles() {
         .pipe(gulpif(!config.debug.styles, cssnano()))
         .pipe(gulp.des(paths.css.dest))
 }
+
+// JavaScript processing
+export function scripts() {
+    config = requireUncached(themePath + 'config/theme-config.js');
+    return gulp.src(paths.js.src)
+        .pipe(newer(paths.js.dest))
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(babel())
+        .pipe(gulpif(!config.dev.debug, uglify()))
+        .pipe(gulp.dest(paths.js.dest))
+}
+
+// Copy any libraries used
+export function jsLibs() {
+    return gulp.src(paths.js.libs)
+        .pipe(newer(paths.js.libsDest))
+        .pipe(gulp.des(paths.js.libsDest))
+}
