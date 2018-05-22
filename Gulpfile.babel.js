@@ -38,7 +38,7 @@ if (i > 1) {
     process.exit(1);
 }
 
-var themePath = '../' + themeName +'/';
+var themePath = '../' + themeName + '/';
 var config = require(themePath + 'config/theme-config.js');
 
 const paths = {
@@ -56,7 +56,7 @@ const paths = {
         libsDest: [themePath + '/js']
     },
     php: {
-        src: [themePath + '**/*.php'],
+        src: [themePath + '*.php'],
         dest: themePath
     },
     images: {
@@ -107,12 +107,13 @@ function reload(done) {
 export function php() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.php.src)
-        .pipe(newer(paths.php.dest))
+        //.pipe(newer(paths.php.dest))
         .pipe(phpcs({
             bin: 'phpcs',
             standard: 'WordPress',
             warningSeverity: 0
         }))
+        .pipe(phpcs.reporter('log'))
         .pipe(phpcs.reporter('file', {path: paths.logs + 'phpcs.log'}))
         .pipe(gulp.dest(paths.php.dest))
 }
@@ -131,7 +132,6 @@ export function sassStyles() {
 export function cssStyles() {
     let cssVars = requireUncached(paths.css.vars);
     return gulp.src(paths.css.src)
-        .pipe(print())
         .pipe(phpcs({
             bin: 'phpcs',
             standard: 'WordPress',
@@ -168,7 +168,7 @@ export function cssStyles() {
 export function scripts() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.js.src)
-        .pipe(newer(paths.js.dest))
+        //.pipe(newer(paths.js.dest))
         .pipe(eslint())
         .pipe(eslint.format('codeframe'))
         .pipe(babel())
