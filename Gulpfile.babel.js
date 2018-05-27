@@ -14,6 +14,7 @@ import gulpif from 'gulp-if';
 import image from 'gulp-image';
 import newer from 'gulp-newer';
 import partialImport from 'postcss-partial-import';
+import path from 'path';
 import phpcs from 'gulp-phpcs';
 import postcss from 'gulp-postcss';
 import print from 'gulp-print';
@@ -74,6 +75,11 @@ const paths = {
     }
 };
 
+// SASS Include Paths for Libraries in /node_modules/
+const SASS_INCLUDE_PATHS = [
+    path.join(__dirname, 'node_modules/plumber-sass')
+];
+
 // Instantiate BrowserSync
 const server = browserSync.create();
 
@@ -122,7 +128,10 @@ export function php() {
 export function sassStyles() {
     return gulp.src(paths.css.sass)
         .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass({
+            includePaths: SASS_INCLUDE_PATHS,
+            outputStyle: 'expanded'
+        }).on('error', sass.logError))
         .pipe(tabify(2, true))
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest(paths.css.sassDest))
