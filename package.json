@@ -48,6 +48,8 @@
     "gulp-tabify": "^0.0.2",
     "gulp-uglify": "^3.0.0",
     "gulp-wp-pot": "^2.3.1",
+    "path": "^0.12.7",
+    "plumber-sass": "^0.7.7",
     "postcss-cssnext": "^3.1.0",
     "postcss-partial-import": "^4.1.0",
     "require-uncached": "^1.0.3"
