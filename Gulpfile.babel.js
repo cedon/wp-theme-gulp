@@ -46,7 +46,7 @@ const paths = {
     css: {
         src: [themePath + 'src/css/*.css'],
         dest: themePath,
-        sass: [themePath + 'src/sass/style.scss'],
+        sass: [themePath + 'src/sass/**/*.scss'],
         sassDest: [themePath + 'src/css/'],
         vars: themePath + 'config/cssVars.json'
     },
@@ -77,7 +77,7 @@ const paths = {
 
 // SASS Include Paths for Libraries in /node_modules/
 const SASS_INCLUDE_PATHS = [
-    path.join(__dirname, 'node_modules/plumber-sass')
+    path.join(__dirname, 'node_modules/plumber-sass')                       // Plumber
 ];
 
 // Instantiate BrowserSync
@@ -113,7 +113,7 @@ function reload(done) {
 export function php() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.php.src)
-        //.pipe(newer(paths.php.dest))
+        .pipe(newer(paths.php.dest))
         .pipe(phpcs({
             bin: 'phpcs',
             standard: 'WordPress',
@@ -177,7 +177,7 @@ export function cssStyles() {
 export function scripts() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.js.src)
-        //.pipe(newer(paths.js.dest))
+        .pipe(newer(paths.js.dest))
         .pipe(eslint())
         .pipe(eslint.format('codeframe'))
         .pipe(babel())
@@ -233,9 +233,9 @@ export function themeCopy() {
 // Watchers
 export function watch() {
     gulp.watch(paths.php.src, gulp.series(php, themeCopy, reload));
-    gulp.watch(paths.css.vars, gulp.series(cssStyles, reload));
+    gulp.watch(paths.css.vars, gulp.series(cssStyles, themeCopy, reload));
     gulp.watch(paths.css.sass, sassStyles);
-    gulp.watch(paths.css.src, gulp.series(cssStyles, reload));
+    gulp.watch(paths.css.src, gulp.series(cssStyles, themeCopy, reload));
     gulp.watch(paths.js.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
     gulp.watch(paths.images.src, gulp.series(images, reload))
 }
