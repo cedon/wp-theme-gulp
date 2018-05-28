@@ -77,6 +77,8 @@ const paths = {
 
 // SASS Include Paths for Libraries in /node_modules/
 const SASS_INCLUDE_PATHS = [
+    path.join(__dirname, 'node_modules/breakpoint-sass/stylesheets'),       // Breakpoint-sass
+    path.join(__dirname, 'node_modules/modularscale-sass/stylesheets'),     // Modular Scale
     path.join(__dirname, 'node_modules/plumber-sass')                       // Plumber
 ];
 
