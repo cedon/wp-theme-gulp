@@ -54,7 +54,7 @@ const paths = {
         src: [themePath + 'src/js/*.js'],
         dest: themePath + 'js/',
         libs: [themePath+ '/src/js/libs/**/*.js'],
-        libsDest: [themePath + '/js']
+        libsDest: [themePath + '/js/libs']
     },
     php: {
         src: [themePath + '*.php'],
