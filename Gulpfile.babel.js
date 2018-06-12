@@ -61,7 +61,7 @@ const paths = {
         dest: themePath
     },
     images: {
-        src: [themePath + 'src/img/'],
+        src: [themePath + 'src/img/*.{jpg,JPG,png,gif,GIF,svg,SVG}'],
         dest: themePath + 'img/'
     },
     languages: {
@@ -198,7 +198,9 @@ export function jsLibs() {
 export function images() {
     return gulp.src(paths.images.src, {allowEmpty: true})
         .pipe(newer(paths.images.dest))
-        .pipe(image())
+        .pipe(image({
+            svgo: true
+        }))
         .pipe(gulp.dest(paths.images.dest))
 }
 
@@ -221,7 +223,7 @@ export function themeCopy() {
         themePath + 'style.css',
         themePath + 'js/**/*.js',
         themePath + 'languages/*',
-        themePath + 'images/*',
+        themePath + 'img/*',
         '!' + themePath + '/src/**/*'
         ],
         {
@@ -238,8 +240,8 @@ export function watch() {
     gulp.watch(paths.css.vars, gulp.series(cssStyles, themeCopy, reload));
     gulp.watch(paths.css.sass, sassStyles);
     gulp.watch(paths.css.src, gulp.series(cssStyles, themeCopy, reload));
-    gulp.watch(paths.js.src, gulp.series(gulp.parallel(scripts, jsLibs), reload));
-    gulp.watch(paths.images.src, gulp.series(images, reload))
+    gulp.watch(paths.js.src, gulp.series(gulp.parallel(scripts, jsLibs), themeCopy, reload));
+    gulp.watch(paths.images.src, gulp.series(images, themeCopy, reload))
 }
 
 // Initial task sequence
