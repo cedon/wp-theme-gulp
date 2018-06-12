@@ -5,6 +5,7 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import browserSync from 'browser-sync';
+import concat from 'gulp-concat';
 import cssnano from 'gulp-cssnano';
 import cssnext from 'postcss-cssnext';
 import csssorter from 'css-declaration-sorter';
@@ -180,6 +181,7 @@ export function scripts() {
     config = requireUncached(themePath + 'config/theme-config.js');
     return gulp.src(paths.js.src)
         .pipe(newer(paths.js.dest))
+        .pipe(concat('functions.js'))
         .pipe(eslint())
         .pipe(eslint.format('codeframe'))
         .pipe(babel())
