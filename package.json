@@ -48,7 +48,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-string-replace": "^1.1.0",
     "gulp-tabify": "^0.0.2",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify": "^3.0.1",
     "gulp-wp-pot": "^2.3.1",
     "modularscale-sass": "^3.0.5",
     "path": "^0.12.7",
