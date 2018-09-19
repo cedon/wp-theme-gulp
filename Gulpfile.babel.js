@@ -240,8 +240,8 @@ export function themeCopy() {
 export function watch() {
     gulp.watch(paths.php.src, gulp.series(php, themeCopy, reload));
     gulp.watch(paths.css.vars, gulp.series(cssStyles, themeCopy, reload));
-    gulp.watch(paths.css.sass, sassStyles);
-    gulp.watch(paths.css.src, gulp.series(cssStyles, themeCopy, reload));
+    gulp.watch(paths.css.sass, gulp.series(sassStyles, cssStyles, themeCopy, reload));
+    //gulp.watch(paths.css.src, gulp.series(cssStyles, themeCopy, reload));
     gulp.watch(paths.js.src, gulp.series(gulp.parallel(scripts, jsLibs), themeCopy, reload));
     gulp.watch(paths.images.src, gulp.series(images, themeCopy, reload))
 }
