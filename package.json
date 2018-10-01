@@ -22,7 +22,7 @@
     "breakpoint-sass": "^2.7.1",
     "browser-sync": "^2.24.7",
     "css-declaration-sorter": "^4.0.1",
-    "eslint": "^5.6.0",
+    "eslint": "^5.6.1",
     "eslint-config-gulp": "^3.0.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-wordpress": "^2.0.0",
